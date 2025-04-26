@@ -125,7 +125,7 @@ project/
 ### Setup Steps
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/salon-management-system.git
+   git clone https://github.com/tulbadex/salon-management-system.git
    cd salon-management-system
    ```
 
