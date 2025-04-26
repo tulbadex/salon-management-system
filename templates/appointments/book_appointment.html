@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Book Appointment{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Book New Appointment</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('book_appointment') }}">
+                        <div class="mb-3">
+                            <label for="customer_id" class="form-label">Customer</label>
+                            <select class="form-select" id="customer_id" name="customer_id" required>
+                                <option value="">Select a customer</option>
+                                {% for customer in customers %}
+                                    <option value="{{ customer.id }}">{{ customer.name }} ({{ customer.phone }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="hairstyle_id" class="form-label">Service</label>
+                            <select class="form-select" id="hairstyle_id" name="hairstyle_id" required>
+                                <option value="">Select a service</option>
+                                {% for hairstyle in hairstyles %}
+                                    <option value="{{ hairstyle.id }}" data-price="{{ hairstyle.price }}">
+                                        {{ hairstyle.name }} ({{ hairstyle.price|ngn }})
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="appointment_date" class="form-label">Date & Time</label>
+                            <input type="text" class="form-control datepicker" id="appointment_date" name="appointment_date" required>
+                        </div>
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Book Appointment</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function() {
+        // Initialize date picker
+            flatpickr(".datepicker", {
+                enableTime: true,
+                dateFormat: "Y-m-d H:i", // Format that matches backend expectation
+                minDate: "today",
+                minTime: "08:00", // Example: salon opens at 8am
+                maxTime: "20:00", // Example: salon closes at 8pm
+                minuteIncrement: 15, // 15-minute intervals
+                time_24hr: false, // 12-hour format
+                disable: [
+                    function(date) {
+                    // Disable Sundays
+                    // return (date.getDay() === 0);
+                    }
+                ]
+            });
+        });
+    </script>
+{% endblock %}

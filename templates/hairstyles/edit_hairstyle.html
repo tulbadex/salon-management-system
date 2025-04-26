@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Hairstyle{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2>Edit Hairstyle</h2>
+        <form method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ hairstyle.name }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="3">{{ hairstyle.description }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input type="number" step="0.01" class="form-control" id="price" name="price" value="{{ hairstyle.price }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Hairstyle Image</label>
+                <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                {% if hairstyle.image_path %}
+                    <div class="mt-2">
+                        <img src="{{ url_for('static', filename='uploads/hairstyles/' + hairstyle.image_path) }}" class="img-thumbnail" style="max-height: 200px;" alt="{{ hairstyle.name }}">
+                        <p class="text-muted mt-2">Current image: {{ hairstyle.image_path }}</p>
+                    </div>
+                {% endif %}
+            </div>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="btn btn-primary">Update Hairstyle</button>
+            <a href="{{ url_for('hairstyles') }}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+{% endblock %}

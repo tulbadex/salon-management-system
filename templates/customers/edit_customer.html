@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Customer{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2>Edit Customer</h2>
+        <form method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ customer.name }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone</label>
+                <input type="tel" class="form-control" id="phone" name="phone" value="{{ customer.phone }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{ customer.email }}">
+            </div>
+            <div class="mb-3">
+                <label for="gender" class="form-label">Gender</label>
+                <select class="form-select" id="gender" name="gender">
+                    <option value="male" {% if customer.gender == 'male' %}selected{% endif %}>Male</option>
+                    <option value="female" {% if customer.gender == 'female' %}selected{% endif %}>Female</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Customer Image</label>
+                <input type="file" class="form-control" id="image" name="image" accept="image/png, image/jpeg, image/gif, image/webp, image/svg+xml">
+                <small class="form-text text-muted">Upload a new customer image (optional)</small>
+                {% if customer and customer.image_path %}
+                    <div class="mt-2">
+                        {% if customer.image_path.endswith(('.svg')) %}
+                            <img src="{{ url_for('static', filename=customer.image_path.replace('..\\', '')) }}" class="img-thumbnail" style="max-height: 100px;">
+                        {% else %}
+                            <img src="{{ url_for('static', filename='uploads/customers/' + customer.image_path) }}" class="img-thumbnail" style="max-height: 100px;">
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="btn btn-primary">Update Customer</button>
+            <a href="{{ url_for('customers') }}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+{% endblock %}

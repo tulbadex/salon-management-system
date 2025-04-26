@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Welcome to Our Salon</title>
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Bootstrap Icons -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+        <style>
+            :root {
+                --primary-color: #6f42c1;
+                --secondary-color: #f8f9fa;
+            }
+
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                overflow-x: hidden;
+            }
+
+            .hero-section {
+                padding: 100px 0;
+                background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
+                            url('{{ url_for("static", filename="images/salon-bg-pattern.png") }}');
+                background-size: cover;
+                background-position: center;
+            }
+
+            .service-card {
+                transition: all 0.3s;
+                border: none;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+
+            .service-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            }
+
+            #load-more {
+                transition: all 0.3s;
+            }
+
+            .default-svg {
+                width: 100%;
+                height: 200px;
+                background-color: #f8f9fa;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--primary-color);
+            }
+
+            .navbar {
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .btn-primary {
+                background-color: var(--primary-color);
+                border-color: var(--primary-color);
+            }
+
+            .btn-outline-primary {
+                color: var(--primary-color);
+                border-color: var(--primary-color);
+            }
+
+            .btn-outline-primary:hover {
+                background-color: var(--primary-color);
+                color: white;
+            }
+
+            .text-primary {
+                color: var(--primary-color) !important;
+            }
+
+            section {
+                padding: 80px 0;
+            }
+
+            .nav-link.active {
+                color: var(--primary-color) !important;
+                font-weight: 600;
+            }
+
+            .feature-icon {
+                width: 60px;
+                height: 60px;
+                background-color: rgba(111, 66, 193, 0.1);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 20px;
+                color: var(--primary-color);
+                font-size: 24px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="#" style="color: var(--primary-color);">
+                    <i class="bi bi-scissors me-2"></i>Luxury Salon
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#services">Services</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">About</a>
+                        </li>
+                        {% if current_user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a href="{{ url_for('login') }}" class="btn btn-outline-primary ms-lg-3">
+                                    <i class="bi bi-person-fill"></i> Staff Login
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero-section bg-light">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 mb-4 mb-lg-0">
+                        <h1 class="display-4 fw-bold mb-4">Your Perfect Look Starts Here</h1>
+                        <p class="lead mb-4">Experience premium hairstyling services from our talented professionals. Book your appointment today!</p>
+                        <div class="d-flex gap-3">
+                            <a href="#services" class="btn btn-primary btn-lg px-4">
+                                <i class="bi bi-scissors"></i> Our Services
+                            </a>
+                            <a href="#about" class="btn btn-outline-secondary btn-lg px-4">
+                                <i class="bi bi-info-circle"></i> Learn More
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="default-svg rounded shadow-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="currentColor" class="bi bi-scissors" viewBox="0 0 16 16">
+                                <path d="M3.5 3.5c-.614-.884-.074-1.962.858-2.5L8 7.226 11.642 1c.932.538 1.472 1.616.858 2.5L8.81 8.61l1.556 2.661a2.5 2.5 0 1 1-.794.637L8 9.73l-1.572 2.177a2.5 2.5 0 1 1-.794-.637L7.19 8.61 3.5 3.5zm2.5 10a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0zm7 0a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="py-5 bg-white">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="fw-bold">Our Hairstyle Collection</h2>
+                    <p class="text-muted">Browse our selection of premium hairstyles</p>
+                </div>
+
+                <div class="row g-4" id="hairstyles-container">
+                    {% for hairstyle in hairstyles[:6] %}
+                        <div class="col-md-6 col-lg-4 col-xl-3">
+                            <div class="card h-100 shadow-sm service-card">
+                                {% if hairstyle.image_path and hairstyle.image_path != 'default_hairstyle.svg' %}
+                                    <img src="{{ url_for('static', filename='uploads/hairstyles/' + hairstyle.image_path) }}"
+                                        class="card-img-top"
+                                        alt="{{ hairstyle.name }}"
+                                        style="height: 200px; object-fit: cover; width: 100%;">
+                                {% else %}
+                                    <div class="default-svg">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                                        </svg>
+                                    </div>
+                                {% endif %}
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ hairstyle.name }}</h5>
+                                    <p class="card-text text-muted">{{ hairstyle.description[:100] }}{% if hairstyle.description|length > 100 %}...{% endif %}</p>
+                                </div>
+                                <div class="card-footer bg-white border-0">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="fw-bold text-primary">{{ hairstyle.price|ngn }}</span>
+                                        <a href="{{ url_for('login') }}" class="btn btn-sm btn-outline-primary">Book Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                {% if hairstyles|length > 6 %}
+                    <div class="text-center mt-4">
+                        <button id="load-more" class="btn btn-primary px-4 py-2" data-offset="6">
+                            <i class="bi bi-arrow-down"></i> Load More Styles
+                        </button>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="py-5 bg-light">
+            <div class="container">
+                <div class="row g-4 text-center">
+                    <div class="col-md-4">
+                        <div class="feature-icon mx-auto">
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                        <h4>Premium Quality</h4>
+                        <p class="text-muted">We use only the highest quality products for all our services.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-icon mx-auto">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+                        <h4>Expert Stylists</h4>
+                        <p class="text-muted">Our team consists of certified professionals with years of experience.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-icon mx-auto">
+                            <i class="bi bi-heart-fill"></i>
+                        </div>
+                        <h4>Satisfaction Guaranteed</h4>
+                        <p class="text-muted">Your satisfaction is our top priority. We won't stop until you love your look.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-5 bg-white">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 mb-4 mb-lg-0">
+                        <div class="default-svg rounded shadow-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="currentColor" class="bi bi-shop" viewBox="0 0 16 16">
+                                <path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zM4 15h3v-5H4v5zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3zm3 0h-2v3h2v-3z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <h2 class="fw-bold mb-4">About Our Salon</h2>
+                        <p class="lead">We're dedicated to providing exceptional hair care services in a relaxing environment.</p>
+                        <p>Founded in 2010, our salon has been serving clients with top-quality hairstyling services. Our team of professional stylists stays updated with the latest trends and techniques to ensure you get the best results.</p>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i> Certified professional stylists</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i> Premium quality products</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i> Personalized service</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i> Comfortable environment</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-dark text-white py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 mb-4 mb-lg-0">
+                        <h5 class="fw-bold mb-3">Luxury Salon</h5>
+                        <p>Your destination for premium hairstyling and beauty services.</p>
+                        <div class="d-flex gap-3">
+                            <a href="#" class="text-white"><i class="bi bi-facebook"></i></a>
+                            <a href="#" class="text-white"><i class="bi bi-instagram"></i></a>
+                            <a href="#" class="text-white"><i class="bi bi-twitter"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-4 mb-lg-0">
+                        <h5 class="fw-bold mb-3">Quick Links</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><a href="#" class="text-white text-decoration-none">Home</a></li>
+                            <li class="mb-2"><a href="#services" class="text-white text-decoration-none">Services</a></li>
+                            <li class="mb-2"><a href="#about" class="text-white text-decoration-none">About</a></li>
+                            {% if current_user.is_authenticated %}
+                                <li class="mb-2"><a href="{{ url_for('dashboard') }}" class="text-white text-decoration-none">Dashboard</a></li>
+                            {% else %}
+                                <li class="mb-2"><a href="{{ url_for('login') }}" class="text-white text-decoration-none">Staff Login</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    <div class="col-lg-4">
+                        <h5 class="fw-bold mb-3">Contact Us</h5>
+                        <p><i class="bi bi-geo-alt-fill me-2"></i> 123 Beauty Street, City</p>
+                        <p><i class="bi bi-telephone-fill me-2"></i> (123) 456-7890</p>
+                        <p><i class="bi bi-envelope-fill me-2"></i> info@luxurysalon.com</p>
+                    </div>
+                </div>
+                <hr class="my-4">
+                <div class="text-center">
+                    <p class="mb-0">&copy; <span id="current-year"></span> Luxury Salon. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Bootstrap JS and dependencies -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                document.getElementById('current-year').textContent = new Date().getFullYear();
+
+                // Load more hairstyles
+                $('#load-more').click(function() {
+                    const offset = $(this).data('offset');
+                    const btn = $(this);
+
+                    btn.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+                    btn.prop('disabled', true);
+
+                    $.ajax({
+                        url: '/hairstyles/load-more',
+                        type: 'GET',
+                        data: {
+                            offset: offset
+                        },
+                        success: function(data) {
+                            $('#hairstyles-container').append(data.html);
+                            btn.data('offset', offset + 6);
+
+                            if (data.remaining <= 0) {
+                                btn.remove();
+                            } else {
+                                btn.html('<i class="bi bi-arrow-down"></i> Load More');
+                                btn.prop('disabled', false);
+                            }
+                        },
+                        error: function() {
+                            btn.html('<i class="bi bi-arrow-down"></i> Try Again');
+                            btn.prop('disabled', false);
+                        }
+                    });
+                });
+
+                // Smooth scrolling for anchor links
+                $('a[href*="#"]').on('click', function(e) {
+                    e.preventDefault();
+
+                    $('html, body').animate({
+                        scrollTop: $($(this).attr('href')).offset().top - 70,
+                    },
+                        500,
+                        'linear'
+                    );
+                });
+
+                // Add active class to nav items on scroll
+                $(window).scroll(function() {
+                    var scrollDistance = $(window).scrollTop() + 100;
+
+                    $('section').each(function(i) {
+                        if ($(this).position().top <= scrollDistance) {
+                            $('.navbar-nav .nav-link.active').removeClass('active');
+                            $('.navbar-nav .nav-link').eq(i).addClass('active');
+                        }
+                    });
+                }).scroll();
+            });
+        </script>
+    </body>
+
+</html>

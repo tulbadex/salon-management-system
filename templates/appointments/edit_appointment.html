@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Appointment{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2>Edit Appointment</h2>
+        <form method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="mb-3">
+                <label for="customer_id" class="form-label">Customer</label>
+                <select class="form-select" id="customer_id" name="customer_id" required>
+                    {% for customer in customers %}
+                        <option value="{{ customer.id }}" {% if customer.id == appointment.customer_id %}selected{% endif %}>
+                            {{ customer.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="hairstyle_id" class="form-label">Service</label>
+                <select class="form-select" id="hairstyle_id" name="hairstyle_id" required>
+                    {% for hairstyle in hairstyles %}
+                        <option value="{{ hairstyle.id }}" {% if hairstyle.id == appointment.hairstyle_id %}selected{% endif %}>
+                            {{ hairstyle.name }} ({{ hairstyle.price|ngn }})
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="appointment_date" class="form-label">Date & Time</label>
+                <input type="datetime-local" class="form-control" id="appointment_date" name="appointment_date" value="{{ appointment.appointment_date.strftime('%Y-%m-%dT%H:%M') }}" required>
+            </div>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="btn btn-primary">Update Appointment</button>
+            <a href="{{ url_for('appointments') }}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+{% endblock %}

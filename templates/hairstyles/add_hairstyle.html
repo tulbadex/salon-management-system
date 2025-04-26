@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Add Hairstyle{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2>Add New Hairstyle</h2>
+        <form method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Hairstyle Image</label>
+                <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                <small class="form-text text-muted">Upload an image for the hairstyle (optional)</small>
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input type="number" step="0.01" class="form-control" id="price" name="price" required>
+            </div>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="btn btn-primary">Add Hairstyle</button>
+            <a href="{{ url_for('hairstyles') }}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+{% endblock %}

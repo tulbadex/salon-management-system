@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block content %}
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Edit User</h4>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{{ url_for('edit_user', user_id=user.id) }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="role" class="form-label">Role</label>
+                    <select class="form-select" id="role" name="role" required>
+                        <option value="staff" {% if user.role == 'staff' %}selected{% endif %}>Staff</option>
+                        <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Admin</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">New Password (leave blank to keep current)</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="password" name="password">
+                        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </div>
+                    <small class="text-muted">Password must be at least 8 characters long</small>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a href="{{ url_for('users') }}" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to Users
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-save"></i> Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% block scripts %}
+        <script>
+            $(document).ready(function() {
+        // Password toggle functionality
+                $('#togglePassword').click(function() {
+                    const passwordInput = $('#password');
+                    const icon = $(this).find('i');
+
+                    if (passwordInput.attr('type') === 'password') {
+                        passwordInput.attr('type', 'text');
+                        icon.removeClass('bi-eye').addClass('bi-eye-slash');
+                    } else {
+                        passwordInput.attr('type', 'password');
+                        icon.removeClass('bi-eye-slash').addClass('bi-eye');
+                    }
+                });
+            });
+        </script>
+    {% endblock %}
+{% endblock %}

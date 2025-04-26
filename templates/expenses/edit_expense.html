@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Expense{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2>Edit Expense</h2>
+        <form method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="mb-3">
+                <label for="item" class="form-label">Item</label>
+                <input type="text" class="form-control" id="item" name="item" value="{{ expense.item }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="amount" class="form-label">Amount</label>
+                <input type="number" step="0.01" class="form-control" id="amount" name="amount" value="{{ expense.amount }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description">{{ expense.description or '' }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="category" class="form-label">Category</label>
+                <select class="form-select" id="category" name="category">
+                    <option value="">Select category</option>
+                    <option value="Supplies" {% if expense.category == 'Supplies' %}selected{% endif %}>Supplies</option>
+                    <option value="Salaries" {% if expense.category == 'Salaries' %}selected{% endif %}>Salaries</option>
+                    <option value="Utilities" {% if expense.category == 'Utilities' %}selected{% endif %}>Utilities</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="expense_date" class="form-label">Date</label>
+                <input type="date" class="form-control" id="expense_date" name="expense_date" value="{{ expense.expense_date.strftime('%Y-%m-%d') }}" required>
+            </div>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="btn btn-primary">Update Expense</button>
+            <a href="{{ url_for('expenses') }}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+{% endblock %}
