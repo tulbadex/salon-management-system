@@ -1,5 +1,12 @@
 # Salon Management System
-#### Video Demo: https://www.youtube.com/watch?v=yourvideoid
+#### Video Demo: 
+<div align="center">
+  <a href="https://youtu.be/mJJcVjTaQ8U">
+    <img src="https://img.youtube.com/vi/mJJcVjTaQ8U/0.jpg" alt="System Demo" width="600">
+  </a>
+  <p>Click the image above to watch the video demonstration on YouTube</p>
+</div>
+
 #### Description:
 
 ## Overview
@@ -7,41 +14,24 @@ The Salon Management System is a comprehensive web application designed to strea
 
 ## Features
 
-### Public-Facing Features
-- **Landing Page**: Attractive homepage showcasing salon services with hero section and call-to-action buttons
-- **Service Catalog**: Interactive display of available hairstyles with images, descriptions, and pricing with "Load More" functionality
-- **About Section**: Detailed information about the salon, staff qualifications, and service guarantees
-- **Responsive Design**: Mobile-friendly interface with adaptive layouts for phones, tablets, and desktops
+#### Public-Facing Features
+- **Landing Page**: Attractive homepage showcasing salon services
+- **Service Catalog**: Interactive display of hairstyles with images
+- **About Section**: Salon information and service guarantees
+- **Responsive Design**: Mobile-first adaptive layouts
 
-### Staff Features (Authentication Required)
-- **Customer Management**:
-  - Complete CRUD operations for customer records
-  - Customer profile pages with appointment history
-  - Gender-specific default avatars
-  - Contact integration (click-to-call/email)
-- **Appointment Scheduling**:
-  - Interactive calendar interface
-  - Conflict detection for double bookings
-  - Status tracking (upcoming/completed)
-  - Service and customer linking
-- **Service Management**:
-  - Hairstyle catalog with image uploads
-  - Price management with currency formatting
-  - Detailed service descriptions
-- **Financial Tracking**:
-  - Expense recording with categorization
-  - Revenue tracking from completed appointments
-  - Monthly sales and expense reports
-- **User Management** (Admin Only):
-  - Role-based access control (Admin/Staff)
-  - Secure password storage
-  - Account activity tracking
+#### Staff Features (Authentication Required)
+- **Customer Management**: Full CRUD operations with profile tracking
+- **Appointment Scheduling**: Calendar interface with conflict detection
+- **Service Management**: Hairstyle catalog with image uploads
+- **Financial Tracking**: Expense recording and revenue reports
+- **User Management**: Role-based access control (Admin/Staff)
 
 ## Technical Implementation
 
 ### Backend
-- **Framework**: Flask 2.0 with blueprints for route organization
-- **Database**: SQLite with SQLAlchemy ORM for production, configurable for PostgreSQL
+- **Framework**: Flask 3.1 with blueprints
+- **Database**: SQLAlchemy ORM (SQLite/PostgreSQL)
 - **Authentication**: Flask-Login with session management and password hashing (bcrypt)
 - **File Handling**: Secure image uploads with validation (file type, size) to dedicated uploads directory
 - **Security**: CSRF protection, secure headers, and input sanitization
@@ -61,33 +51,18 @@ The system uses a relational database with these main tables:
 - **Appointments**: id, customer_id, hairstyle_id, appointment_date, completed, amount_paid
 - **Expenses**: id, item, amount, description, expense_date, category
 
-## Files and Structure
+## System Structure
 
 ```
 project/
-├── app.py                # Main application configuration and routes
-├── extensions.py         # Flask extensions initialization
-├── init_db.py            # Database schema creation and seeding
-├── models.py             # SQLAlchemy models with relationships
-├── requirements.txt      # Python dependencies with pinned versions
-├── static/
-│   ├── css/              # Custom stylesheets
-│   ├── images/           # Default images and branding
-│   └── uploads/          # Customer/hairstyle uploads (gitignored)
-├── templates/
-│   ├── base.html         # Base template with navigation
-│   ├── index.html        # Public landing page
-│   ├── auth/            # Authentication templates
-│   ├── customers/        # Customer management templates
-│   ├── appointments/     # Appointment templates
-│   ├── hairstyles/       # Service management templates
-│   ├── expenses/         # Financial templates
-│   ├── dashboard/        # Dashboard templates
-│   ├── reports/          # Report templates
-│   ├── users/             # User templates
-│   └── shared/           # Partial templates
-├── .gitignore           # Standard Python/Flask ignore patterns
-└── README.md            # Comprehensive documentation
+├── app.py                # Main application
+├── extensions.py         # Flask extensions
+├── models.py             # Database models
+├── requirements.txt      # Dependencies
+├── static/               # Frontend assets
+├── templates/            # Jinja2 templates
+├── init_db.py            # DB initialization
+└── README.md             # Documentation
 ```
 
 ## Design Decisions
@@ -122,78 +97,28 @@ project/
 - pip package manager
 - Modern web browser
 
-### Setup Steps
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/tulbadex/salon-management-system.git
-   cd salon-management-system
-   ```
+### Quick Start
+```bash
+# Clone repository
+git clone https://github.com/yourusername/salon-management-system.git
+cd salon-management-system
 
-2. Create and activate virtual environment:
-   ```bash
-   python -m venv venv
-   # Linux/Mac:
-   source venv/bin/activate
-   # Windows:
-   venv\Scripts\activate
-   ```
+# Install dependencies
+pip install -r requirements.txt
 
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+# Initialize database
+python init_db.py
 
-4. Initialize database:
-   ```bash
-   python init_db.py
-   ```
-
-5. Configure environment (optional):
-   ```bash
-   cp .env.example .env
-   # Edit .env file as needed
-   ```
-
-6. Run development server:
-   ```bash
-   flask run
-   ```
-
-7. Access the system at `http://localhost:5000`
+# Start application
+flask run
+```
 
 ### Default Credentials
-- Admin: admin / admin123
-- Staff: staff / staff123
+| Role   | Username | Password  |
+|--------|----------|-----------|
+| Admin  | admin    | admin123  |
+| Staff  | staff    | staff123  |
 
-## Usage Examples
-
-1. **Daily Operations**:
-   ```python
-   # Book a new appointment
-   1. Navigate to Appointments > Book New
-   2. Select customer from dropdown
-   3. Choose service and available time slot
-   4. Confirm details and save
-   ```
-
-2. **Financial Tracking**:
-   ```python
-   # Record an expense
-   1. Go to Finance > Expenses > Add New
-   2. Enter item details and amount
-   3. Select category from dropdown
-   4. Attach receipt image (optional)
-   5. Save record
-   ```
-
-3. **Reporting**:
-   ```python
-   # Generate monthly report
-   1. Navigate to Reports
-   2. Select date range
-   3. View automatically generated charts
-   4. Export as PDF/CSV if needed
-   ```
 
 ## Learning Outcomes
 
