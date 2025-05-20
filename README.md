@@ -120,7 +120,10 @@ flask db init
 flask db migrate -m "Initial tables"
 flask db upgrade
 
-# 6. Start the application
+# 6. Seed sample data (optional but recommended for demo)
+python init_db.py
+
+# 7. Start the application
 flask run
 ```
 
