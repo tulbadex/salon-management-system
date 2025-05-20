@@ -99,18 +99,46 @@ project/
 
 ### Quick Start
 ```bash
-# Clone repository
+# 1. Clone the project
 git clone https://github.com/yourusername/salon-management-system.git
 cd salon-management-system
 
-# Install dependencies
+# 2. Set up virtual environment (recommended)
+python -m venv venv        # on Windows: py -3 -m venv .venv   
+source venv/bin/activate   # On Windows: .venv\Scripts\activate
+
+# 3. Install dependencies
 pip install -r requirements.txt
 
-# Initialize database
-python init_db.py
+# 4. Configure database
+export FLASK_APP=app.py  # Windows: set FLASK_APP=app.py
 
-# Start application
+# Initialize migrations (only needed once)
+flask db init
+
+# 5. Run database migrations
+flask db migrate -m "Initial tables"
+flask db upgrade
+
+# 6. Start the application
 flask run
+```
+
+### 🔄 Routine Development Workflow
+```bash
+# After making model changes:
+flask db migrate -m "your description"
+flask db upgrade
+
+# To reset database (careful!):
+flask db downgrade base && flask db upgrade
+```
+
+### 🌐 Production Deployment
+```bash
+# Set production mode first!
+export FLASK_ENV=production  # Windows: set FLASK_ENV=production
+flask run --host=0.0.0.0 --port=8080
 ```
 
 ### Default Credentials

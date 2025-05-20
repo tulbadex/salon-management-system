@@ -1,14 +1,10 @@
-import os
 from datetime import datetime, timedelta
-from app import app
-from extensions import db
 from models import User, Customer, Hairstyle, Appointment, Expense
 
 
-def initialize_database():
+def initialize_database(db):
     """Initialize the database with sample data"""
     try:
-        db.create_all()
 
         # Create admin user if not exists
         if not User.query.filter_by(username='admin').first():
@@ -204,5 +200,6 @@ def initialize_database():
 
 if __name__ == '__main__':
     from app import app
+    from extensions import db
     with app.app_context():
-        initialize_database()
+        initialize_database(db)

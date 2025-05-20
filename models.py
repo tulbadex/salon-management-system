@@ -53,3 +53,4 @@ class Expense(db.Model):
     description = db.Column(db.Text)
     amount = db.Column(db.Float, nullable=False)
     expense_date = db.Column(db.DateTime, default=datetime.utcnow)
+    category = db.Column(db.String(50))  # e.g., 'Supplies', 'Salaries', 'Utilities'

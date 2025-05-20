@@ -1011,10 +1011,14 @@ def delete_user(user_id):
 
 if __name__ == '__main__':
     with app.app_context():
+        from flask_migrate import upgrade
+        # Apply any pending database migrations
+        upgrade() # Applies migrations
+
         # Create database tables if they don't exist
-        db.create_all()
+        # db.create_all()
 
         from init_db import initialize_database
-        initialize_database()
+        initialize_database(db)
 
     app.run(debug=True)
