@@ -26,34 +26,34 @@ def initialize_database(db):
         if not Hairstyle.query.first():
             hairstyles = [
                 {
-                    "name": "Basic Cut",
-                    "price": 20.00,
-                    "description": "A simple and clean haircut.",
-                    "image": "basic_cut.svg"
+                    "name": "Modern Mullet Hair",
+                    "price": 10000.00,
+                    "description": "2024 heralds the continuation of the Modern Mullet's reign, inspired by the revival of the Y2K trend. This versatile style is rapidly gaining popularity and is expected to last. Far from a one-size-fits-all, the modern mullet embraces various interpretations, from spiky and short to curly versions. It's a trend that adapts to your style, whether you're aiming for a subtle change or a bold statement. Get ready to see this dynamic hairstyle on trendsetters across Asia.",
+                    "image": "mullet_cut.svg"
                 },
                 {
-                    "name": "Premium Cut",
-                    "price": 35.00,
-                    "description": "A more detailed and styled haircut.",
-                    "image": "premium_cut.svg"
+                    "name": "Buzz Cut",
+                    "price": 5000.00,
+                    "description": "The buzz cut is resurging as a top trend this year, particularly in Western and ASEAN countries, thanks to its perfect match with barber culture. With a nod to the Y2K trend, reminiscent of styles popularized by several celebrity icons, the Buzz Cut is more than just a haircut – it's a fashion statement. This ultra-short style is all about embracing simplicity with a touch of edginess. For a modern twist, maintain a clean, even length all around, offering a sharp yet low-maintenance, unpretentiously chic look.",
+                    "image": "buzz_cut.svg"
                 },
                 {
-                    "name": "Coloring - Single Process",
-                    "price": 60.00,
-                    "description": "One solid color application.",
-                    "image": "coloring.svg"
+                    "name": "Textured Afro with Temple Fade",
+                    "price": 6000.00,
+                    "description": "Embrace the freedom and beauty of afro hair with a foam textured style that lets your coils take their natural shape. Paired with neatly faded temples, this look celebrates the natural texture of your hair while offering a sleek style that is stylish and requires minimum maintenance.",
+                    "image": "textured_afro.svg"
                 },
                 {
-                    "name": "Highlights - Partial",
-                    "price": 75.00,
-                    "description": "Highlights on the top section of the hair.",
+                    "name": "Freeform Dreadlocks High Top Haircut",
+                    "price": 7500.00,
+                    "description": "Celebrate the strength and texture of your natural coily hair with a dynamic high top of freeform ‘locs. This hairstyle encourages acceptance of your hair’s natural texture but also adds a playful contrast with bleached tips, making each dreadlock interesting and unique.",
                     "image": "highlights.svg"
                 },
                 {
-                    "name": "Updo - Special Occasion",
-                    "price": 50.00,
-                    "description": "Elegant styling for events.",
-                    "image": "updo.svg"
+                    "name": "Short Dreadlocks with Undercut Design",
+                    "price": 10000.00,
+                    "description": "Elevate the cool factor of freeform dreadlocks with a twisted high top that incorporates bold designs for an extra spark. Strategic etching adds an artistic edge to the natural volume and wild curls, creating a look that’s not only visually striking but also full of personality and style. For vibrant afro curly hair, keep hair hydrated and moisturized.",
+                    "image": "short_dreadlocks.svg"
                 },
             ]
 
